@@ -14,35 +14,33 @@ export class Collectible {
     this.y = this.baseY + Math.sin(this.hoverTimer) * 6; // Bob height
   }
 
+  drawBoneShape(ctx, offsetX, offsetY, fillStyle) {
+    ctx.fillStyle = fillStyle;
+    const shaftY = this.y + offsetY + this.height * 0.35;
+    const shaftHeight = this.height * 0.3;
+    const endRadius = this.height * 0.25;
+    
+    ctx.beginPath();
+    // Left top knob
+    ctx.arc(this.x + offsetX + endRadius + 2, this.y + offsetY + endRadius + 2, endRadius, 0, Math.PI * 2);
+    // Left bottom knob
+    ctx.arc(this.x + offsetX + endRadius + 2, this.y + offsetY + this.height - endRadius - 2, endRadius, 0, Math.PI * 2);
+    // Right top knob
+    ctx.arc(this.x + offsetX + this.width - endRadius - 2, this.y + offsetY + endRadius + 2, endRadius, 0, Math.PI * 2);
+    // Right bottom knob
+    ctx.arc(this.x + offsetX + this.width - endRadius - 2, this.y + offsetY + this.height - endRadius - 2, endRadius, 0, Math.PI * 2);
+    
+    // Connecting shaft
+    ctx.rect(this.x + offsetX + endRadius, shaftY, this.width - endRadius * 2, shaftHeight);
+    ctx.fill();
+  }
+
   draw(ctx) {
     ctx.save();
-    
-    const drawBoneShape = (offsetX, offsetY, fillStyle) => {
-      ctx.fillStyle = fillStyle;
-      const shaftY = this.y + offsetY + this.height * 0.35;
-      const shaftHeight = this.height * 0.3;
-      const endRadius = this.height * 0.25;
-      
-      ctx.beginPath();
-      // Left top knob
-      ctx.arc(this.x + offsetX + endRadius + 2, this.y + offsetY + endRadius + 2, endRadius, 0, Math.PI * 2);
-      // Left bottom knob
-      ctx.arc(this.x + offsetX + endRadius + 2, this.y + offsetY + this.height - endRadius - 2, endRadius, 0, Math.PI * 2);
-      // Right top knob
-      ctx.arc(this.x + offsetX + this.width - endRadius - 2, this.y + offsetY + endRadius + 2, endRadius, 0, Math.PI * 2);
-      // Right bottom knob
-      ctx.arc(this.x + offsetX + this.width - endRadius - 2, this.y + offsetY + this.height - endRadius - 2, endRadius, 0, Math.PI * 2);
-      
-      // Connecting shaft
-      ctx.rect(this.x + offsetX + endRadius, shaftY, this.width - endRadius * 2, shaftHeight);
-      ctx.fill();
-    };
-    
     // Draw dark border shadow
-    drawBoneShape(0, 0, '#37474f');
+    this.drawBoneShape(ctx, 0, 0, '#37474f');
     // Draw cream bone core
-    drawBoneShape(0, -1, '#fffde7'); 
-    
+    this.drawBoneShape(ctx, 0, -1, '#fffde7'); 
     ctx.restore();
   }
 

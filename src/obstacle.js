@@ -1,9 +1,9 @@
 export class Obstacle {
-  constructor(x, width = 45, height = 50) {
+  constructor(x, groundY = 460, width = 45, height = 50) {
     this.x = x;
     this.width = width;
     this.height = height;
-    this.y = 460 - this.height;
+    this.y = groundY - this.height;
   }
 
   update(gameSpeed, dt) {
