@@ -52,7 +52,7 @@ canvas {
   position: absolute;
   top: 15px;
   left: 15px;
-  right: 15px;
+  right: 70px;
   display: flex;
   justify-content: space-between;
   font-size: 12px;
@@ -152,7 +152,6 @@ canvas {
   color: #000;
   font-family: 'Press Start 2P', monospace;
   font-size: 14px;
-  font-weight: bold;
   padding: 12px 24px;
   border-radius: 6px;
   cursor: pointer;
@@ -192,4 +191,29 @@ canvas {
   padding: 15px;
   border-radius: 6px;
   margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  #hud {
+    font-size: 8px;
+    right: 55px;
+  }
+  .hud-item {
+    padding: 4px 6px;
+    border-width: 1px;
+  }
+  .sound-toggle-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    top: 15px;
+    right: 15px;
+  }
+  .hud-indicator {
+    font-size: 8px;
+    padding: 4px 6px;
+  }
+  #powerups-hud {
+    top: 50px;
+  }
 }
