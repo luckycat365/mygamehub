@@ -19,18 +19,16 @@ export class Particle {
   }
 
   draw(ctx) {
-    ctx.save();
     ctx.globalAlpha = Math.max(0, Math.min(1, this.alpha));
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x, this.y, this.size, this.size);
-    ctx.restore();
   }
 }
 
 export class ParticleSystem {
   constructor() {
     this.particles = [];
-    this.maxParticles = 200;
+    this.maxParticles = 300;
   }
 
   addParticle(p) {
@@ -86,15 +84,20 @@ export class ParticleSystem {
   }
 
   update(dt) {
-    this.particles = this.particles.filter(p => {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const p = this.particles[i];
       p.update(dt);
-      return p.alpha > 0;
-    });
+      if (p.alpha <= 0) {
+        this.particles.splice(i, 1);
+      }
+    }
   }
 
   draw(ctx) {
-    for (const p of this.particles) {
-      p.draw(ctx);
+    const originalAlpha = ctx.globalAlpha;
+    for (let i = 0; i < this.particles.length; i++) {
+      this.particles[i].draw(ctx);
     }
+    ctx.globalAlpha = originalAlpha;
   }
 }
