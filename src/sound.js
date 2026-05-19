@@ -5,11 +5,12 @@ export class Sound {
   }
 
   init() {
+    if (typeof window === 'undefined') return;
     if (!this.ctx) {
-      const AudioCtx = typeof window !== 'undefined' ? (window.AudioContext || window.webkitAudioContext) : null;
-      if (AudioCtx) {
-        this.ctx = new AudioCtx();
-      }
+      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
     }
   }
 
@@ -28,14 +29,15 @@ export class Sound {
     gain.connect(this.ctx.destination);
 
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(150, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(600, this.ctx.currentTime + 0.15);
+    const now = this.ctx.currentTime;
+    osc.frequency.setValueAtTime(150, now);
+    osc.frequency.exponentialRampToValueAtTime(600, now + 0.15);
 
-    gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
 
     osc.start();
-    osc.stop(this.ctx.currentTime + 0.15);
+    osc.stop(now + 0.15);
   }
 
   playCollect() {
