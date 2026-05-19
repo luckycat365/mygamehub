@@ -87,7 +87,7 @@ export class Game {
     // Key bindings
     window.addEventListener('keydown', (e) => {
       if (this.state === 'PLAYING') {
-        if (e.code === 'Space' || e.code === 'ArrowUp') {
+        if (e.code === 'Space' || e.code === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.code === 'KeyW') {
           e.preventDefault();
           const jumped = this.dog.jump();
           if (jumped) this.sound.playJump();

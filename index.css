@@ -25,6 +25,7 @@ body {
   background: #000;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   overflow: hidden;
+  touch-action: manipulation;
 }
 
 @media (min-aspect-ratio: 16/9) {
@@ -46,6 +47,7 @@ canvas {
   height: 100%;
   display: block;
   image-rendering: pixelated;
+  touch-action: manipulation;
 }
 
 #hud {
@@ -156,6 +158,7 @@ canvas {
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.1s;
+  touch-action: manipulation;
 }
 
 .retro-btn:active {
@@ -179,6 +182,7 @@ canvas {
   align-items: center;
   justify-content: center;
   z-index: 30;
+  touch-action: manipulation;
 }
 
 .text-danger {
