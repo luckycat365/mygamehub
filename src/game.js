@@ -443,6 +443,7 @@ export class Game {
         }
       }
     }
+    this.updateHUD(false);
   }
 
   draw() {
