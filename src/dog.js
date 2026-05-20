@@ -45,7 +45,7 @@ export class Dog {
     if (this.speedTime > 0) this.speedTime = Math.max(0, this.speedTime - dt);
     
     // 2. Physics & Movement
-    const isOnGround = this.y >= this.groundY - this.height;
+    const isOnGround = this.y >= this.groundY - this.height && this.vy >= 0;
     
     if (!isOnGround) {
       this.vy += this.gravity * dt;
