@@ -149,6 +149,7 @@ export class Game {
       this.state = 'PLAYING';
       this.showScreen('PLAYING');
       this.sound.init();
+      this.sound.playMusic();
       this.lastTime = performance.now();
       requestAnimationFrame((t) => this.loop(t));
     }
@@ -158,6 +159,7 @@ export class Game {
     if (this.state === 'PLAYING') {
       this.state = 'PAUSED';
       this.showScreen('PAUSED');
+      this.sound.pauseMusic();
     }
   }
 
@@ -165,6 +167,7 @@ export class Game {
     if (this.state === 'PAUSED') {
       this.state = 'PLAYING';
       this.showScreen('PLAYING');
+      this.sound.playMusic();
       this.lastTime = performance.now();
       requestAnimationFrame((t) => this.loop(t));
     }
@@ -190,6 +193,8 @@ export class Game {
     this.state = 'PLAYING';
     this.showScreen('PLAYING');
     this.updateHUD(false);
+    this.sound.stopMusic();
+    this.sound.playMusic();
     this.lastTime = performance.now();
     requestAnimationFrame((t) => this.loop(t));
   }
@@ -260,6 +265,7 @@ export class Game {
 
   triggerGameOver() {
     this.state = 'GAMEOVER';
+    this.sound.stopMusic();
     this.sound.playHit();
     
     // Massive debris explosion

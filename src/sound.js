@@ -2,21 +2,64 @@ export class Sound {
   constructor() {
     this.ctx = null;
     this.muted = false;
+    this.music = null;
+    this.musicGain = null;
+    this.musicSource = null;
   }
 
   init() {
     if (typeof window === 'undefined') return;
     if (!this.ctx) {
-      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const AudioContextClass = typeof window !== 'undefined' && (window.AudioContext || window.webkitAudioContext);
+      if (AudioContextClass) {
+        this.ctx = new AudioContextClass();
+      }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.ctx.resume().catch(() => {});
+    }
+    if (typeof Audio !== 'undefined' && !this.music) {
+      this.music = new Audio('assets/music/AP.mp3');
+      this.music.loop = true;
+      if (this.ctx) {
+        this.musicGain = this.ctx.createGain();
+        this.musicGain.gain.setValueAtTime(this.muted ? 0 : 0.3, this.ctx.currentTime);
+        this.musicSource = this.ctx.createMediaElementSource(this.music);
+        this.musicSource.connect(this.musicGain);
+        this.musicGain.connect(this.ctx.destination);
+      }
     }
   }
 
   toggleMute() {
     this.muted = !this.muted;
+    if (this.musicGain) {
+      const now = this.ctx ? this.ctx.currentTime : 0;
+      this.musicGain.gain.setValueAtTime(this.muted ? 0 : 0.3, now);
+    }
     return this.muted;
+  }
+
+  playMusic() {
+    this.init();
+    if (this.music) {
+      this.music.play().catch(err => {
+        console.warn('BGM play blocked or failed:', err);
+      });
+    }
+  }
+
+  pauseMusic() {
+    if (this.music) {
+      this.music.pause();
+    }
+  }
+
+  stopMusic() {
+    if (this.music) {
+      this.music.pause();
+      this.music.currentTime = 0;
+    }
   }
 
   playJump() {
