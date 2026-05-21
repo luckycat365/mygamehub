@@ -104,8 +104,18 @@ export class Game {
       }
     });
 
-    // Pointer jump support
+    // Touch jump support
+    this.canvas.addEventListener('touchstart', (e) => {
+      if (this.state === 'PLAYING') {
+        e.preventDefault();
+        const jumped = this.dog.jump();
+        if (jumped) this.sound.playJump();
+      }
+    }, { passive: false });
+
+    // Pointer jump support (mouse, stylus, etc.)
     this.canvas.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') return;
       if (this.state === 'PLAYING') {
         e.preventDefault();
         const jumped = this.dog.jump();
