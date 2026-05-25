@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A colorful game hub for kid-friendly browser games. Pick a game and start playing.">
+  <meta name="description" content="Choose a game and start playing from the game hub.">
   <title>Playful Game Hub</title>
   <link rel="stylesheet" href="index.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,46 +11,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body class="hub-page">
+  <audio id="landing-music" src="assets/music/AI%20for%20Beauty.mp3" loop preload="auto"></audio>
   <main class="hub-shell">
-    <section class="hub-hero" aria-labelledby="hub-title">
-      <div class="hero-copy">
-        <p class="hub-kicker">Games for young adventurers</p>
-        <h1 id="hub-title">Playful Game Hub</h1>
-        <p class="hub-intro">Choose a bright, quick browser game made for kids up to 12. More games are coming soon.</p>
-        <a class="hub-primary-btn" href="games/corgi-run/">Play Corgi Run</a>
-      </div>
-      <img class="hero-art" src="assets/images/game-hub-hero.png" alt="Colorful arcade world with a corgi, game portals, clouds, coins, and stars.">
-    </section>
-
-    <section class="games-section" aria-labelledby="games-title">
-      <div class="section-heading">
-        <p class="hub-kicker">Pick a game</p>
-        <h2 id="games-title">Game Library</h2>
-      </div>
-
-      <div class="game-grid">
-        <article class="game-card">
-          <img src="assets/images/corgi-run-card.png" alt="Happy corgi jumping over a garden fence while collecting golden bones.">
-          <div class="game-card-body">
-            <p class="game-tag">Runner</p>
-            <h3>Retro Corgi Run</h3>
-            <p>Jump over fences, collect bones, and chase a new high score.</p>
-            <a class="game-card-link" href="games/corgi-run/">Play now</a>
-          </div>
-        </article>
-
-        <article class="game-card coming-soon" aria-label="Coming soon game slot">
-          <div class="soon-art" aria-hidden="true">
-            <span>+</span>
-          </div>
-          <div class="game-card-body">
-            <p class="game-tag">Coming soon</p>
-            <h3>New Adventure</h3>
-            <p>A new kid-friendly game can be added here with its own page and URL.</p>
-          </div>
-        </article>
-      </div>
+    <section class="hub-stage">
+      <a class="game-entry" href="games/corgi-run/" aria-label="Start Retro Corgi Run">
+        <img src="assets/images/corgi-run-card.png" alt="Retro Corgi Run game card with a corgi jumping in a sunny garden.">
+      </a>
     </section>
   </main>
+  <script type="module" src="src/landing.js"></script>
 </body>
 </html>
