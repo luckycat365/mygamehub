@@ -1,8 +1,11 @@
+const MUSIC_URL = new URL('../assets/music/AP.mp3', import.meta.url).href;
+
 export class Sound {
   constructor() {
     this.ctx = null;
     this.muted = false;
     this.music = null;
+    this.musicVolume = 0.3;
     this.musicGain = null;
     this.musicSource = null;
   }
@@ -19,23 +22,24 @@ export class Sound {
       this.ctx.resume().catch(() => {});
     }
     if (typeof Audio !== 'undefined' && !this.music) {
-      this.music = new Audio('assets/music/AP.mp3');
+      this.music = new Audio(MUSIC_URL);
       this.music.loop = true;
-      if (this.ctx) {
-        this.musicGain = this.ctx.createGain();
-        this.musicGain.gain.setValueAtTime(this.muted ? 0 : 0.3, this.ctx.currentTime);
-        this.musicSource = this.ctx.createMediaElementSource(this.music);
-        this.musicSource.connect(this.musicGain);
-        this.musicGain.connect(this.ctx.destination);
+      this.music.preload = 'auto';
+      this.music.volume = this.muted ? 0 : this.musicVolume;
+      if (typeof this.music.load === 'function') {
+        this.music.load();
       }
     }
   }
 
   toggleMute() {
     this.muted = !this.muted;
+    if (this.music) {
+      this.music.volume = this.muted ? 0 : this.musicVolume;
+    }
     if (this.musicGain) {
       const now = this.ctx ? this.ctx.currentTime : 0;
-      this.musicGain.gain.setValueAtTime(this.muted ? 0 : 0.3, now);
+      this.musicGain.gain.setValueAtTime(this.muted ? 0 : this.musicVolume, now);
     }
     return this.muted;
   }

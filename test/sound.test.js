@@ -78,8 +78,14 @@ globalThis.Audio = class {
   constructor(src) {
     this.src = src;
     this.loop = false;
+    this.preload = '';
+    this.volume = 1;
     this.currentTime = 0;
     this.paused = true;
+    this.loaded = false;
+  }
+  load() {
+    this.loaded = true;
   }
   play() {
     this.paused = false;
@@ -96,7 +102,7 @@ test('Sound Background Music Controls', async (t) => {
     assert.strictEqual(sound.musicSource, null);
   });
 
-  await t.test('initializes music elements in init() instead of playMusic()', () => {
+  await t.test('initializes music element in init() instead of playMusic()', () => {
     const sound = new Sound();
     assert.strictEqual(sound.music, null);
     assert.strictEqual(sound.musicGain, null);
@@ -105,34 +111,36 @@ test('Sound Background Music Controls', async (t) => {
     sound.init();
 
     assert.ok(sound.music);
-    assert.ok(sound.musicGain);
-    assert.ok(sound.musicSource);
-    assert.strictEqual(sound.music.src, 'assets/music/AP.mp3');
+    assert.strictEqual(sound.musicGain, null);
+    assert.strictEqual(sound.musicSource, null);
+    assert.ok(sound.music.src.endsWith('/assets/music/AP.mp3'));
     assert.strictEqual(sound.music.loop, true);
-    assert.strictEqual(sound.musicGain.gain.value, 0.3);
+    assert.strictEqual(sound.music.preload, 'auto');
+    assert.strictEqual(sound.music.volume, 0.3);
+    assert.strictEqual(sound.music.loaded, true);
   });
 
-  await t.test('toggleMute() correctly mutes and unmutes the gain node', () => {
+  await t.test('toggleMute() correctly mutes and unmutes the music element', () => {
     const sound = new Sound();
     sound.init();
-    assert.strictEqual(sound.musicGain.gain.value, 0.3);
+    assert.strictEqual(sound.music.volume, 0.3);
 
     // Mute
     sound.toggleMute();
     assert.strictEqual(sound.muted, true);
-    assert.strictEqual(sound.musicGain.gain.value, 0);
+    assert.strictEqual(sound.music.volume, 0);
 
     // Unmute
     sound.toggleMute();
     assert.strictEqual(sound.muted, false);
-    assert.strictEqual(sound.musicGain.gain.value, 0.3);
+    assert.strictEqual(sound.music.volume, 0.3);
   });
 
   await t.test('initializes music on playMusic', () => {
     const sound = new Sound();
     sound.playMusic();
     assert.ok(sound.music);
-    assert.strictEqual(sound.music.src, 'assets/music/AP.mp3');
+    assert.ok(sound.music.src.endsWith('/assets/music/AP.mp3'));
     assert.strictEqual(sound.music.loop, true);
     assert.strictEqual(sound.music.paused, false);
   });

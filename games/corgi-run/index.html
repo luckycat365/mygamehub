@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Guide a cute Corgi through a garden, jumping over fences and collecting bones.">
+  <title>Retro Corgi Run | Playful Game Hub</title>
+  <link rel="stylesheet" href="../../index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="game-page">
+  <div id="portrait-warning">
+    <div class="warning-content">
+      <div class="phone-icon">PHONE</div>
+      <h2>ROTATE DEVICE</h2>
+      <p>Please rotate your device to landscape mode to play Retro Corgi Run.</p>
+    </div>
+  </div>
+
+  <div id="game-container">
+    <a class="back-to-hub" href="../../">Hub</a>
+
+    <div id="hud">
+      <div class="hud-item">SCORE: <span id="score-val">00000</span></div>
+      <div class="hud-item">BONES: <span id="bones-val">0</span></div>
+      <div class="hud-item">HI-SCORE: <span id="hiscore-val">00000</span></div>
+    </div>
+
+    <div id="powerups-hud">
+      <div id="shield-indicator" class="hud-indicator hidden">SHIELD: <span id="shield-timer">0.0</span>s</div>
+      <div id="speed-indicator" class="hud-indicator hidden">SPEED: <span id="speed-timer">0.0</span>s</div>
+    </div>
+
+    <canvas id="game-canvas"></canvas>
+
+    <div id="screen-overlay" class="overlay">
+      <div id="start-screen" class="screen-content">
+        <h1>CORGI RUN</h1>
+        <p>Avoid obstacles, collect bones, and gain power-ups!</p>
+        <div class="controls-guide">
+          <p><strong>SPACEBAR / CLICK / TAP</strong> to Jump / Double Jump</p>
+          <p><strong>ESC / P</strong> to Pause</p>
+        </div>
+        <button id="start-btn" class="retro-btn">START RUN</button>
+      </div>
+
+      <div id="pause-screen" class="screen-content hidden">
+        <h1>PAUSED</h1>
+        <p>Press ESC or P to resume</p>
+        <button id="resume-btn" class="retro-btn">RESUME</button>
+      </div>
+
+      <div id="gameover-screen" class="screen-content hidden">
+        <h1 class="text-danger">GAME OVER</h1>
+        <p>You crashed!</p>
+        <div class="final-scores">
+          <p>Final Score: <span id="final-score-val">0</span></p>
+          <p>Bones Collected: <span id="final-bones-val">0</span></p>
+        </div>
+        <button id="restart-btn" class="retro-btn">RUN AGAIN</button>
+      </div>
+    </div>
+
+    <button id="sound-btn" class="sound-toggle-btn" aria-label="Toggle sound">SOUND</button>
+  </div>
+
+  <script type="module" src="../../src/main.js"></script>
+</body>
+</html>
