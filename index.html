@@ -11,12 +11,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body class="hub-page">
-  <audio id="landing-music" src="assets/music/AI%20for%20Beauty.mp3" loop preload="auto"></audio>
+  <audio id="landing-music" src="assets/music/AI%20for%20Beauty.mp3" loop preload="auto" autoplay playsinline></audio>
   <main class="hub-shell">
     <section class="hub-stage">
-      <a class="game-entry" href="games/corgi-run/" aria-label="Start Retro Corgi Run">
-        <img src="assets/images/corgi-run-card.png" alt="Retro Corgi Run game card with a corgi jumping in a sunny garden.">
-      </a>
+      <div class="game-entry-wrap">
+        <a class="game-entry" href="games/corgi-run/" aria-label="Start Hundi-Run">
+          <img src="assets/images/corgi-run-card.png" alt="Hundi-Run game card with a corgi jumping in a sunny garden.">
+        </a>
+        <p class="game-entry-name">Hundi-Run</p>
+      </div>
+      <div class="game-entry-wrap">
+        <a class="game-entry game-entry--dummy" href="#" data-dummy-card aria-label="Princess Star Adventure coming soon">
+          <img src="assets/images/princess-magic-card.png" alt="Princess Star Adventure fantasy platform game card.">
+        </a>
+        <p class="game-entry-name">Princess Star Adventure</p>
+      </div>
     </section>
   </main>
   <script type="module" src="src/landing.js"></script>

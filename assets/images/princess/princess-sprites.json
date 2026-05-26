@@ -1,0 +1,18 @@
+{
+  "image": "princess-sprite-sheet.png",
+  "frameWidth": 448,
+  "frameHeight": 256,
+  "framesPerAnimation": 6,
+  "animations": {
+    "standing": "princess-standing.png",
+    "running": "princess-running.png",
+    "jumping": "princess-jumping.png",
+    "attacking": "princess-attacking.png"
+  },
+  "frameDirectories": {
+    "standing": "standing/",
+    "running": "running/",
+    "jumping": "jumping/",
+    "attacking": "attacking/"
+  }
+}
