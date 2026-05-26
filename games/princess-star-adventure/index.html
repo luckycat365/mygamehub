@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Guide the princess across fantasy platforms, defeat teacup sentries with star magic, and reach the castle.">
+  <title>Princess Star Adventure | Playful Game Hub</title>
+  <link rel="stylesheet" href="../../index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="game-page princess-page">
+  <div id="game-container">
+    <a class="back-to-hub" href="../../">Hub</a>
+
+    <div id="hud">
+      <div class="hud-item princess-hud-chip">
+        <span class="hud-label">Points</span>
+        <span id="princess-score-val" class="hud-value">0</span>
+      </div>
+      <div class="hud-item princess-hud-chip">
+        <span class="hud-label">Goal</span>
+        <span class="hud-value">Castle</span>
+      </div>
+    </div>
+
+    <canvas id="princess-canvas"></canvas>
+
+    <div id="screen-overlay" class="overlay">
+      <div id="start-screen" class="screen-content">
+        <h1>PRINCESS STAR ADVENTURE</h1>
+        <p>Reach the castle and use star magic to clear the path.</p>
+        <div class="controls-guide">
+          <p><strong>LEFT / RIGHT</strong> to Move</p>
+          <p><strong>UP</strong> to Jump</p>
+          <p><strong>SPACE</strong> to Shoot Stars</p>
+        </div>
+        <button id="start-btn" class="retro-btn">START QUEST</button>
+      </div>
+
+      <div id="pause-screen" class="screen-content hidden">
+        <h1>PAUSED</h1>
+        <p>Press ESC or P to resume.</p>
+        <button id="resume-btn" class="retro-btn">RESUME</button>
+      </div>
+
+      <div id="win-screen" class="screen-content hidden">
+        <h1>CASTLE REACHED!</h1>
+        <p>You finished the level with <span id="win-score-val">0</span> points.</p>
+        <button id="play-again-btn" class="retro-btn">PLAY AGAIN</button>
+      </div>
+
+      <div id="gameover-screen" class="screen-content hidden">
+        <h1 class="text-danger">TRY AGAIN</h1>
+        <p>The teacup sentry touched the princess.</p>
+        <p>Points: <span id="final-score-val">0</span></p>
+        <button id="restart-btn" class="retro-btn">RESTART</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../../src/princess-main.js"></script>
+</body>
+</html>

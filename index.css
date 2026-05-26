@@ -296,6 +296,112 @@ canvas {
   text-shadow: 0 4px #b71c1c !important;
 }
 
+.princess-page {
+  --princess-ui-cream: rgba(255, 248, 226, 0.92);
+  --princess-ui-pink: #f48cc8;
+  --princess-ui-gold: #ffd166;
+  --princess-ui-plum: #7a4aa0;
+  --princess-ui-shadow: rgba(102, 63, 132, 0.28);
+  background: #7dc8ff;
+}
+
+.princess-page #game-container {
+  background: #9edcff;
+}
+
+.princess-page #hud {
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.princess-page .hud-item {
+  border: 0;
+}
+
+.princess-page .princess-hud-chip {
+  min-width: 132px;
+  padding: 8px 12px 9px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 229, 246, 0.88));
+  color: var(--princess-ui-plum);
+  box-shadow:
+    0 5px 0 rgba(194, 108, 199, 0.48),
+    0 10px 22px var(--princess-ui-shadow),
+    inset 0 0 0 2px rgba(255, 209, 102, 0.55);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-shadow: none;
+}
+
+.princess-page .hud-label {
+  color: #9b5cb4;
+  font-size: 8px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.princess-page .hud-value {
+  min-width: 24px;
+  color: #4e2f73;
+  font-size: 12px;
+  text-align: right;
+}
+
+.princess-page .back-to-hub {
+  left: 16px;
+  bottom: 16px;
+  padding: 9px 13px 8px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 226, 0.95), rgba(255, 209, 102, 0.9));
+  color: #6a3d88;
+  font-size: 8px;
+  box-shadow:
+    0 4px 0 rgba(194, 108, 199, 0.5),
+    0 9px 18px rgba(74, 46, 95, 0.24);
+  text-transform: uppercase;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.princess-page .back-to-hub:hover,
+.princess-page .back-to-hub:focus-visible {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 0 rgba(194, 108, 199, 0.45),
+    0 12px 22px rgba(74, 46, 95, 0.28);
+}
+
+.princess-page .back-to-hub:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 2px 0 rgba(194, 108, 199, 0.55),
+    0 6px 14px rgba(74, 46, 95, 0.22);
+}
+
+.princess-page .screen-content {
+  border-color: #f8a7d8;
+  box-shadow: 0 0 22px rgba(248, 167, 216, 0.35);
+}
+
+.princess-page .screen-content h1 {
+  color: #ffd166;
+  text-shadow: 0 4px #c56cc7;
+  line-height: 1.35;
+}
+
+.princess-page .retro-btn {
+  background: #ffd166;
+  border-bottom-color: #c56cc7;
+}
+
 .final-scores {
   background: rgba(0, 0, 0, 0.4);
   padding: 15px;
