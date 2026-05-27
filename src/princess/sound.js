@@ -57,7 +57,12 @@ export class PrincessSound {
   playMusic() {
     this.init();
     if (this.music) {
-      const playResult = this.music.play();
+      let playResult;
+      try {
+        playResult = this.music.play();
+      } catch {
+        return;
+      }
       if (playResult && typeof playResult.catch === 'function') {
         playResult.catch(() => {});
       }
@@ -73,7 +78,9 @@ export class PrincessSound {
   stopMusic() {
     if (this.music) {
       this.music.pause();
-      this.music.currentTime = 0;
+      try {
+        this.music.currentTime = 0;
+      } catch {}
     }
   }
 
@@ -81,33 +88,39 @@ export class PrincessSound {
     this.init();
     if (!this.starAttack) return;
 
-    this.starAttack.currentTime = 0;
-    this.starAttack.volume = this.sfxVolume;
-    const playResult = this.starAttack.play();
-    if (playResult && typeof playResult.catch === 'function') {
-      playResult.catch(() => {});
-    }
+    this.playEffect(this.starAttack);
   }
 
   playTeacupCrash() {
     this.init();
     if (!this.teacupCrash) return;
 
-    this.teacupCrash.currentTime = 0;
-    this.teacupCrash.volume = this.sfxVolume;
-    const playResult = this.teacupCrash.play();
-    if (playResult && typeof playResult.catch === 'function') {
-      playResult.catch(() => {});
-    }
+    this.playEffect(this.teacupCrash);
   }
 
   playDoubleJump() {
     this.init();
     if (!this.doubleJump) return;
 
-    this.doubleJump.currentTime = 0;
-    this.doubleJump.volume = this.sfxVolume;
-    const playResult = this.doubleJump.play();
+    this.playEffect(this.doubleJump);
+  }
+
+  playEffect(effect) {
+    try {
+      effect.currentTime = 0;
+    } catch {}
+
+    try {
+      effect.volume = this.sfxVolume;
+    } catch {}
+
+    let playResult;
+    try {
+      playResult = effect.play();
+    } catch {
+      return;
+    }
+
     if (playResult && typeof playResult.catch === 'function') {
       playResult.catch(() => {});
     }

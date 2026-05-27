@@ -1,4 +1,4 @@
-import { WORLD_WIDTH } from './constants.js';
+import { WORLD_WIDTH } from './constants.js?v=princess-mobile-stability';
 
 const platform = (x, y, width, type) => ({
   x,

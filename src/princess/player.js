@@ -1,4 +1,4 @@
-import { GRAVITY, JUMP_SPEED, PLAYER_SPEED } from './constants.js';
+import { GRAVITY, JUMP_SPEED, PLAYER_SPEED } from './constants.js?v=princess-mobile-stability';
 
 const PLATFORM_SNAP_TOLERANCE = 10;
 

@@ -3,7 +3,12 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { assetUrl, loadPrincessAssets, PRINCESS_ASSET_PATHS } from '../src/princess/assets.js';
+import {
+  assetUrl,
+  loadPrincessAssets,
+  PRINCESS_ASSET_PATHS,
+  PRINCESS_ASSET_VERSION
+} from '../src/princess/assets.js';
 import { LEVEL } from '../src/princess/level.js';
 import { TeacupSentry } from '../src/princess/enemy.js';
 import { PrincessInput } from '../src/princess/input.js';
@@ -140,7 +145,9 @@ test('Princess Star Adventure runtime asset paths stay in the PrincessStarAdvent
 
   assert.ok(paths.includes('castle/castle.png'));
   for (const assetPath of paths) {
-    assert.match(assetUrl(assetPath), /assets\/images\/PrincessStarAdventure\//);
+    const url = assetUrl(assetPath);
+    assert.match(url, /assets\/images\/PrincessStarAdventure\//);
+    assert.ok(url.endsWith(`?v=${PRINCESS_ASSET_VERSION}`));
     assert.ok(
       fs.existsSync(path.join(assetRoot, assetPath)),
       `Missing Princess asset: ${assetPath}`

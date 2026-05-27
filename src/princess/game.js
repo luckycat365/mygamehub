@@ -1,14 +1,14 @@
-import { checkCollision } from '../physics.js';
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from './constants.js';
-import { loadPrincessAssets } from './assets.js';
-import { TeacupSentry } from './enemy.js';
-import { PrincessInput } from './input.js?v=princess-mobile-controls';
-import { LEVEL } from './level.js';
-import { FantasyPlatform } from './platform.js';
-import { PrincessPlayer } from './player.js';
-import { StarProjectile } from './projectile.js';
-import { playerReachedCastle, playerTouchedEnemy } from './rules.js';
-import { PrincessSound } from './sound.js';
+import { checkCollision } from '../physics.js?v=princess-mobile-stability';
+import { CANVAS_HEIGHT, CANVAS_WIDTH } from './constants.js?v=princess-mobile-stability';
+import { loadPrincessAssets } from './assets.js?v=princess-mobile-stability';
+import { TeacupSentry } from './enemy.js?v=princess-mobile-stability';
+import { PrincessInput } from './input.js?v=princess-mobile-stability';
+import { LEVEL } from './level.js?v=princess-mobile-stability';
+import { FantasyPlatform } from './platform.js?v=princess-mobile-stability';
+import { PrincessPlayer } from './player.js?v=princess-mobile-stability';
+import { StarProjectile } from './projectile.js?v=princess-mobile-stability';
+import { playerReachedCastle, playerTouchedEnemy } from './rules.js?v=princess-mobile-stability';
+import { PrincessSound } from './sound.js?v=princess-mobile-stability';
 
 export class PrincessGame {
   constructor(canvas, options = {}) {

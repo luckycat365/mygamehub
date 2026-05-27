@@ -1,4 +1,4 @@
-import { checkCollision } from '../physics.js';
+import { checkCollision } from '../physics.js?v=princess-mobile-stability';
 
 export const playerTouchedEnemy = (player, enemy) => {
   if (enemy.destroyed) return false;

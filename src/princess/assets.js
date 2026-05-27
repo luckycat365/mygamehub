@@ -1,4 +1,5 @@
 export const ASSET_ROOT = '../../assets/images/PrincessStarAdventure';
+export const PRINCESS_ASSET_VERSION = 'princess-mobile-stability';
 
 const framePaths = (folder) => Array.from({ length: 6 }, (_, index) => (
   `princess/${folder}/${String(index + 1).padStart(2, '0')}.png`
@@ -33,7 +34,9 @@ export const PRINCESS_ASSET_PATHS = {
   }
 };
 
-export const assetUrl = (path) => new URL(`${ASSET_ROOT}/${path}`, import.meta.url).href;
+export const assetUrl = (path) => (
+  `${new URL(`${ASSET_ROOT}/${path}`, import.meta.url).href}?v=${PRINCESS_ASSET_VERSION}`
+);
 
 const loadImage = (path) => new Promise((resolve, reject) => {
   const image = new Image();

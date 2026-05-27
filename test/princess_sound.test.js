@@ -101,6 +101,41 @@ test('PrincessSound background music controls', async (t) => {
     assert.strictEqual(sound.doubleJump.volume, sound.sfxVolume);
   });
 
+  await t.test('sound effect playback failures do not throw', () => {
+    const OriginalAudio = globalThis.Audio;
+    globalThis.Audio = class {
+      constructor(src) {
+        this.src = src;
+        this.loop = false;
+        this.preload = '';
+        this.volume = 1;
+      }
+
+      set currentTime(value) {
+        throw new Error(`Cannot seek to ${value}`);
+      }
+
+      load() {}
+      pause() {}
+      play() {
+        throw new Error('Audio playback is not ready');
+      }
+    };
+
+    try {
+      const sound = new PrincessSound();
+      assert.doesNotThrow(() => sound.playStarAttack());
+      assert.doesNotThrow(() => sound.playTeacupCrash());
+      assert.doesNotThrow(() => sound.playDoubleJump());
+      assert.doesNotThrow(() => {
+        sound.playMusic();
+        sound.stopMusic();
+      });
+    } finally {
+      globalThis.Audio = OriginalAudio;
+    }
+  });
+
   await t.test('double jump effect starts without a perceptible silence gap', () => {
     const soundPath = path.join(
       repoRoot,

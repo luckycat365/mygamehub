@@ -1,4 +1,4 @@
-import { PROJECTILE_SPEED } from './constants.js';
+import { PROJECTILE_SPEED } from './constants.js?v=princess-mobile-stability';
 
 export class StarProjectile {
   constructor(x, y, direction) {
