@@ -37,6 +37,18 @@ test('PrincessSound background music controls', async (t) => {
     assert.strictEqual(sound.music.loop, true);
     assert.strictEqual(sound.music.preload, 'auto');
     assert.strictEqual(sound.music.loaded, true);
+    assert.ok(sound.starAttack);
+    assert.ok(sound.starAttack.src.endsWith('/assets/sounds/PrincessStarAdventure/star-attack.wav'));
+    assert.strictEqual(sound.starAttack.preload, 'auto');
+    assert.strictEqual(sound.starAttack.loaded, true);
+    assert.ok(sound.teacupCrash);
+    assert.ok(sound.teacupCrash.src.endsWith('/assets/sounds/PrincessStarAdventure/teacup-crash.wav'));
+    assert.strictEqual(sound.teacupCrash.preload, 'auto');
+    assert.strictEqual(sound.teacupCrash.loaded, true);
+    assert.ok(sound.doubleJump);
+    assert.ok(sound.doubleJump.src.endsWith('/assets/sounds/PrincessStarAdventure/princess%20double%20jump.wav'));
+    assert.strictEqual(sound.doubleJump.preload, 'auto');
+    assert.strictEqual(sound.doubleJump.loaded, true);
   });
 
   await t.test('plays, pauses, and stops the princess music', async () => {
@@ -52,5 +64,35 @@ test('PrincessSound background music controls', async (t) => {
     sound.stopMusic();
     assert.strictEqual(sound.music.paused, true);
     assert.strictEqual(sound.music.currentTime, 0);
+  });
+
+  await t.test('plays the star attack sound effect', () => {
+    const sound = new PrincessSound();
+
+    sound.playStarAttack();
+
+    assert.ok(sound.starAttack);
+    assert.strictEqual(sound.starAttack.paused, false);
+    assert.strictEqual(sound.starAttack.volume, sound.sfxVolume);
+  });
+
+  await t.test('plays the teacup crash sound effect', () => {
+    const sound = new PrincessSound();
+
+    sound.playTeacupCrash();
+
+    assert.ok(sound.teacupCrash);
+    assert.strictEqual(sound.teacupCrash.paused, false);
+    assert.strictEqual(sound.teacupCrash.volume, sound.sfxVolume);
+  });
+
+  await t.test('plays the double jump sound effect', () => {
+    const sound = new PrincessSound();
+
+    sound.playDoubleJump();
+
+    assert.ok(sound.doubleJump);
+    assert.strictEqual(sound.doubleJump.paused, false);
+    assert.strictEqual(sound.doubleJump.volume, sound.sfxVolume);
   });
 });

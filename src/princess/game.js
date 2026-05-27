@@ -185,7 +185,11 @@ export class PrincessGame {
       this.shoot();
     }
 
+    const previousJumpCount = this.player.jumpCount;
     this.player.update(actions, this.platforms, dt, LEVEL.width);
+    if (actions.jump && previousJumpCount === 1 && this.player.jumpCount === 2) {
+      this.sound.playDoubleJump?.();
+    }
     for (const enemy of this.enemies) enemy.update(dt);
     for (const projectile of this.projectiles) projectile.update(dt);
 
@@ -212,6 +216,7 @@ export class PrincessGame {
 
   shoot() {
     this.player.attack();
+    this.sound.playStarAttack?.();
     this.shootCooldown = 0.32;
     const direction = this.player.facing;
     const x = direction > 0 ? this.player.x + this.player.width - 8 : this.player.x - 24;
@@ -229,6 +234,7 @@ export class PrincessGame {
           if (enemy.hit()) {
             this.score += 1;
             this.updateHUD();
+            this.sound.playTeacupCrash?.();
           }
           break;
         }
