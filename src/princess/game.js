@@ -2,7 +2,7 @@ import { checkCollision } from '../physics.js';
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from './constants.js';
 import { loadPrincessAssets } from './assets.js';
 import { TeacupSentry } from './enemy.js';
-import { PrincessInput } from './input.js';
+import { PrincessInput } from './input.js?v=princess-mobile-controls';
 import { LEVEL } from './level.js';
 import { FantasyPlatform } from './platform.js';
 import { PrincessPlayer } from './player.js';
@@ -23,6 +23,7 @@ export class PrincessGame {
     this.lastTime = 0;
     this.cameraX = 0;
     this.shootCooldown = 0;
+    this.controlMode = 'keyboard';
     this.sound = options.sound || new PrincessSound();
 
     this.initDOMElements();
@@ -47,6 +48,7 @@ export class PrincessGame {
   initDOMElements() {
     this.dom = {
       score: document.getElementById('princess-score-val'),
+      container: document.getElementById('game-container'),
       overlay: document.getElementById('screen-overlay'),
       startScreen: document.getElementById('start-screen'),
       pauseScreen: document.getElementById('pause-screen'),
@@ -57,7 +59,16 @@ export class PrincessGame {
       startBtn: document.getElementById('start-btn'),
       resumeBtn: document.getElementById('resume-btn'),
       restartBtn: document.getElementById('restart-btn'),
-      playAgainBtn: document.getElementById('play-again-btn')
+      playAgainBtn: document.getElementById('play-again-btn'),
+      keyboardControlBtn: document.getElementById('keyboard-control-btn'),
+      mobileControlBtn: document.getElementById('mobile-control-btn'),
+      keyboardControlsGuide: document.getElementById('keyboard-controls-guide'),
+      mobileControlsGuide: document.getElementById('mobile-controls-guide'),
+      mobileControls: document.getElementById('mobile-controls'),
+      mobileLeftBtn: document.getElementById('mobile-left-btn'),
+      mobileRightBtn: document.getElementById('mobile-right-btn'),
+      mobileAttackBtn: document.getElementById('mobile-attack-btn'),
+      mobileJumpBtn: document.getElementById('mobile-jump-btn')
     };
   }
 
@@ -66,12 +77,64 @@ export class PrincessGame {
     this.dom.resumeBtn?.addEventListener('click', () => this.resume());
     this.dom.restartBtn?.addEventListener('click', () => this.restart());
     this.dom.playAgainBtn?.addEventListener('click', () => this.restart());
+    this.dom.keyboardControlBtn?.addEventListener('click', () => this.selectControlMode('keyboard'));
+    this.dom.mobileControlBtn?.addEventListener('click', () => this.selectControlMode('mobile'));
+    this.bindMobileHoldButton(this.dom.mobileLeftBtn, 'left');
+    this.bindMobileHoldButton(this.dom.mobileRightBtn, 'right');
+    this.bindMobileActionButton(this.dom.mobileAttackBtn, 'shoot');
+    this.bindMobileActionButton(this.dom.mobileJumpBtn, 'jump');
   }
 
   setStartButtonReady(isReady) {
     if (!this.dom.startBtn) return;
     this.dom.startBtn.disabled = !isReady;
     this.dom.startBtn.textContent = isReady ? 'START QUEST' : 'LOADING...';
+  }
+
+  selectControlMode(mode) {
+    this.controlMode = mode;
+    const isMobile = mode === 'mobile';
+
+    this.dom.keyboardControlBtn?.classList.toggle?.('selected', !isMobile);
+    this.dom.mobileControlBtn?.classList.toggle?.('selected', isMobile);
+    this.dom.keyboardControlBtn?.setAttribute?.('aria-pressed', String(!isMobile));
+    this.dom.mobileControlBtn?.setAttribute?.('aria-pressed', String(isMobile));
+    this.dom.keyboardControlsGuide?.classList.toggle?.('hidden', isMobile);
+    this.dom.mobileControlsGuide?.classList.toggle?.('hidden', !isMobile);
+    this.updateMobileControlsVisibility();
+  }
+
+  bindMobileHoldButton(button, action) {
+    if (!button) return;
+    const release = (event) => {
+      event?.preventDefault();
+      this.input.setVirtualControl(action, false);
+    };
+
+    button.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      button.setPointerCapture?.(event.pointerId);
+      this.input.setVirtualControl(action, true);
+    });
+    button.addEventListener('pointerup', release);
+    button.addEventListener('pointercancel', release);
+    button.addEventListener('pointerleave', release);
+    button.addEventListener('lostpointercapture', release);
+  }
+
+  bindMobileActionButton(button, action) {
+    if (!button) return;
+    button.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      this.input.queueVirtualAction(action);
+    });
+  }
+
+  updateMobileControlsVisibility() {
+    if (!this.dom.mobileControls) return;
+    const shouldShow = this.state === 'PLAYING' && this.controlMode === 'mobile';
+    this.dom.mobileControls.classList.toggle?.('hidden', !shouldShow);
+    this.dom.container?.classList.toggle?.('mobile-controls-active', shouldShow);
   }
 
   resetLevel() {
@@ -90,6 +153,7 @@ export class PrincessGame {
     if (this.state !== 'START' || !this.assets) return;
     this.state = 'PLAYING';
     this.showScreen('PLAYING');
+    this.updateMobileControlsVisibility();
     this.sound.playMusic();
     this.lastTime = performance.now();
     requestAnimationFrame((time) => this.loop(time));
@@ -100,6 +164,7 @@ export class PrincessGame {
     this.updateHUD();
     this.state = 'PLAYING';
     this.showScreen('PLAYING');
+    this.updateMobileControlsVisibility();
     this.sound.stopMusic();
     this.sound.playMusic();
     this.lastTime = performance.now();
@@ -110,6 +175,7 @@ export class PrincessGame {
     if (this.state !== 'PLAYING') return;
     this.state = 'PAUSED';
     this.showScreen('PAUSED');
+    this.updateMobileControlsVisibility();
     this.sound.pauseMusic();
   }
 
@@ -117,6 +183,7 @@ export class PrincessGame {
     if (this.state !== 'PAUSED') return;
     this.state = 'PLAYING';
     this.showScreen('PLAYING');
+    this.updateMobileControlsVisibility();
     this.sound.playMusic();
     this.lastTime = performance.now();
     requestAnimationFrame((time) => this.loop(time));
@@ -127,6 +194,7 @@ export class PrincessGame {
     this.sound.stopMusic();
     this.dom.winScore.textContent = this.score;
     this.showScreen('WON');
+    this.updateMobileControlsVisibility();
   }
 
   gameOver() {
@@ -134,6 +202,7 @@ export class PrincessGame {
     this.sound.stopMusic();
     this.dom.finalScore.textContent = this.score;
     this.showScreen('GAMEOVER');
+    this.updateMobileControlsVisibility();
   }
 
   showScreen(screenName) {

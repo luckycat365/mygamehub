@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="description" content="Guide the princess across fantasy platforms, defeat teacup sentries with star magic, and reach the castle.">
   <title>Princess Star Adventure | Playful Game Hub</title>
-  <link rel="stylesheet" href="../../index.css">
+  <link rel="stylesheet" href="../../index.css?v=princess-mobile-controls">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -31,12 +31,26 @@
       <div id="start-screen" class="screen-content">
         <h1>PRINCESS STAR ADVENTURE</h1>
         <p>Reach the castle and use star magic to clear the path.</p>
-        <div class="controls-guide">
-          <p><strong>LEFT / RIGHT</strong> to Move</p>
-          <p><strong>UP</strong> to Jump</p>
-          <p><strong>SPACE</strong> to Shoot Stars</p>
+        <div class="princess-start-actions">
+          <div class="princess-control-panel" aria-label="Choose control style">
+            <p class="princess-control-title">Controls</p>
+            <div class="princess-control-options" role="group" aria-label="Control options">
+              <button id="keyboard-control-btn" class="control-option-btn selected" type="button" aria-pressed="true">Keyboard</button>
+              <button id="mobile-control-btn" class="control-option-btn" type="button" aria-pressed="false">Mobile</button>
+            </div>
+            <div id="keyboard-controls-guide" class="controls-guide">
+              <p><strong>LEFT / RIGHT</strong> to Move</p>
+              <p><strong>UP</strong> to Jump</p>
+              <p><strong>SPACE</strong> to Shoot Stars</p>
+            </div>
+            <div id="mobile-controls-guide" class="controls-guide hidden">
+              <p><strong>LEFT / RIGHT</strong> buttons to Move</p>
+              <p><strong>JUMP</strong> button to Jump</p>
+              <p><strong>ATTACK</strong> button to Shoot Stars</p>
+            </div>
+          </div>
+          <button id="start-btn" class="retro-btn">START QUEST</button>
         </div>
-        <button id="start-btn" class="retro-btn">START QUEST</button>
       </div>
 
       <div id="pause-screen" class="screen-content hidden">
@@ -58,8 +72,19 @@
         <button id="restart-btn" class="retro-btn">RESTART</button>
       </div>
     </div>
+
+    <div id="mobile-controls" class="mobile-controls hidden" aria-label="Mobile controls">
+      <div class="mobile-control-cluster mobile-control-cluster--move">
+        <button id="mobile-left-btn" class="mobile-control-btn" type="button" aria-label="Move left">&larr;</button>
+        <button id="mobile-right-btn" class="mobile-control-btn" type="button" aria-label="Move right">&rarr;</button>
+      </div>
+      <div class="mobile-control-cluster mobile-control-cluster--actions">
+        <button id="mobile-attack-btn" class="mobile-control-btn mobile-control-btn--wide" type="button" aria-label="Attack">Attack</button>
+        <button id="mobile-jump-btn" class="mobile-control-btn mobile-control-btn--wide" type="button" aria-label="Jump">Jump</button>
+      </div>
+    </div>
   </div>
 
-  <script type="module" src="../../src/princess-main.js"></script>
+  <script type="module" src="../../src/princess-main.js?v=princess-mobile-controls"></script>
 </body>
 </html>

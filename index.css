@@ -393,6 +393,7 @@ canvas {
 }
 
 .princess-page .screen-content {
+  max-width: 720px;
   border-color: #f8a7d8;
   box-shadow: 0 0 22px rgba(248, 167, 216, 0.35);
 }
@@ -406,6 +407,101 @@ canvas {
 .princess-page .retro-btn {
   background: #ffd166;
   border-bottom-color: #c56cc7;
+}
+
+.princess-start-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  text-align: left;
+}
+
+.princess-control-panel {
+  min-width: 0;
+}
+
+.princess-control-title {
+  margin-bottom: 10px;
+  color: #ffd166;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.princess-control-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.control-option-btn {
+  padding: 9px 12px;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff8e2;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.control-option-btn.selected {
+  background: #ffd166;
+  color: #5d3b78;
+  box-shadow: 0 4px 0 rgba(197, 108, 199, 0.6);
+}
+
+.princess-page .controls-guide {
+  margin-bottom: 0;
+}
+
+.mobile-controls {
+  position: absolute;
+  inset: auto 0 18px;
+  z-index: 18;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 28px;
+  pointer-events: none;
+}
+
+.mobile-control-cluster {
+  display: flex;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+.mobile-control-btn {
+  min-width: 66px;
+  height: 58px;
+  border: 2px solid rgba(255, 255, 255, 0.86);
+  border-radius: 16px;
+  background: rgba(255, 248, 226, 0.46);
+  color: #5d3b78;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 20px;
+  box-shadow: 0 5px 0 rgba(122, 74, 160, 0.35);
+  touch-action: none;
+  user-select: none;
+}
+
+.mobile-control-btn--wide {
+  min-width: 94px;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.mobile-control-btn:active {
+  transform: translateY(3px);
+  background: rgba(255, 209, 102, 0.66);
+  box-shadow: 0 2px 0 rgba(122, 74, 160, 0.4);
+}
+
+.princess-page #game-container.mobile-controls-active .back-to-hub {
+  bottom: 88px;
 }
 
 .final-scores {
@@ -482,6 +578,40 @@ canvas {
   #powerups-hud {
     top: 50px;
   }
+
+  .princess-page .screen-content {
+    width: calc(100% - 28px);
+    padding: 18px;
+  }
+
+  .princess-page .screen-content h1 {
+    font-size: 22px;
+  }
+
+  .princess-start-actions {
+    gap: 16px;
+  }
+
+  .mobile-controls {
+    bottom: 10px;
+    padding: 0 14px;
+  }
+
+  .mobile-control-cluster {
+    gap: 8px;
+  }
+
+  .mobile-control-btn {
+    min-width: 54px;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 16px;
+  }
+
+  .mobile-control-btn--wide {
+    min-width: 78px;
+    font-size: 7px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -504,6 +634,11 @@ canvas {
     text-align: center;
     font-size: 9px;
     line-height: 1.5;
+  }
+
+  .princess-start-actions {
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 }
 

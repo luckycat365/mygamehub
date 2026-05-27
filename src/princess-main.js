@@ -1,4 +1,4 @@
-import { PrincessGame } from './princess/game.js';
+import { PrincessGame } from './princess/game.js?v=princess-mobile-controls';
 
 if (typeof document !== 'undefined') {
   const initializePrincessGame = () => {

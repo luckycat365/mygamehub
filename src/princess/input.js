@@ -2,6 +2,10 @@ export class PrincessInput {
   constructor(target = window) {
     this.target = target;
     this.keys = new Set();
+    this.virtualControls = {
+      left: false,
+      right: false
+    };
     this.jumpQueued = false;
     this.shootQueued = false;
     this.pauseQueued = false;
@@ -36,12 +40,23 @@ export class PrincessInput {
 
   snapshot() {
     return {
-      left: this.keys.has('ArrowLeft'),
-      right: this.keys.has('ArrowRight'),
+      left: this.keys.has('ArrowLeft') || this.virtualControls.left,
+      right: this.keys.has('ArrowRight') || this.virtualControls.right,
       jump: this.consumeJump(),
       shoot: this.consumeShoot(),
       pause: this.consumePause()
     };
+  }
+
+  setVirtualControl(action, isActive) {
+    if (action === 'left' || action === 'right') {
+      this.virtualControls[action] = isActive;
+    }
+  }
+
+  queueVirtualAction(action) {
+    if (action === 'jump') this.jumpQueued = true;
+    if (action === 'shoot') this.shootQueued = true;
   }
 
   consumeJump() {

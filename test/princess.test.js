@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { assetUrl, loadPrincessAssets, PRINCESS_ASSET_PATHS } from '../src/princess/assets.js';
 import { LEVEL } from '../src/princess/level.js';
 import { TeacupSentry } from '../src/princess/enemy.js';
+import { PrincessInput } from '../src/princess/input.js';
 import { PrincessPlayer } from '../src/princess/player.js';
 import { playerReachedCastle, playerTouchedEnemy } from '../src/princess/rules.js';
 
@@ -145,6 +146,39 @@ test('Princess Star Adventure runtime asset paths stay in the PrincessStarAdvent
       `Missing Princess asset: ${assetPath}`
     );
   }
+});
+
+test('Princess Star Adventure input supports mobile controls', () => {
+  const listeners = new Map();
+  const target = {
+    addEventListener(type, handler) {
+      listeners.set(type, handler);
+    },
+    removeEventListener(type) {
+      listeners.delete(type);
+    }
+  };
+  const input = new PrincessInput(target);
+
+  input.setVirtualControl('left', true);
+  input.queueVirtualAction('jump');
+  let actions = input.snapshot();
+  assert.strictEqual(actions.left, true);
+  assert.strictEqual(actions.right, false);
+  assert.strictEqual(actions.jump, true);
+  assert.strictEqual(input.snapshot().jump, false);
+
+  input.setVirtualControl('left', false);
+  input.setVirtualControl('right', true);
+  input.queueVirtualAction('shoot');
+  actions = input.snapshot();
+  assert.strictEqual(actions.left, false);
+  assert.strictEqual(actions.right, true);
+  assert.strictEqual(actions.shoot, true);
+  assert.strictEqual(input.snapshot().shoot, false);
+
+  input.destroy();
+  assert.strictEqual(listeners.size, 0);
 });
 
 test('Princess Star Adventure assets wait for image decode before becoming ready', async () => {
