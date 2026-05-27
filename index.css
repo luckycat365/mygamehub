@@ -477,13 +477,13 @@ canvas {
 .mobile-control-btn {
   min-width: 66px;
   height: 58px;
-  border: 2px solid rgba(255, 255, 255, 0.86);
+  border: 2px solid rgba(235, 250, 255, 0.9);
   border-radius: 16px;
-  background: rgba(255, 248, 226, 0.46);
-  color: #5d3b78;
+  background: rgba(206, 241, 255, 0.42);
+  color: #2f5f86;
   font-family: 'Press Start 2P', monospace;
   font-size: 20px;
-  box-shadow: 0 5px 0 rgba(122, 74, 160, 0.35);
+  box-shadow: 0 5px 0 rgba(83, 154, 204, 0.28);
   touch-action: none;
   user-select: none;
 }
@@ -494,10 +494,35 @@ canvas {
   text-transform: uppercase;
 }
 
+.mobile-control-btn--image {
+  width: 74px;
+  min-width: 74px;
+  height: 74px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.72;
+}
+
+.mobile-control-btn--image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
 .mobile-control-btn:active {
   transform: translateY(3px);
-  background: rgba(255, 209, 102, 0.66);
-  box-shadow: 0 2px 0 rgba(122, 74, 160, 0.4);
+  background: rgba(224, 248, 255, 0.62);
+  box-shadow: 0 2px 0 rgba(83, 154, 204, 0.34);
+}
+
+.mobile-control-btn--image:active {
+  background: transparent;
+  box-shadow: none;
+  opacity: 0.9;
 }
 
 .princess-page #game-container.mobile-controls-active .back-to-hub {
@@ -611,6 +636,12 @@ canvas {
   .mobile-control-btn--wide {
     min-width: 78px;
     font-size: 7px;
+  }
+
+  .mobile-control-btn--image {
+    width: 62px;
+    min-width: 62px;
+    height: 62px;
   }
 }
 
