@@ -361,35 +361,37 @@ canvas {
 }
 
 .princess-page .back-to-hub {
-  left: 16px;
-  bottom: 16px;
+  left: 50%;
+  top: 16px;
+  bottom: auto;
+  transform: translateX(-50%);
   padding: 9px 13px 8px;
   border: 2px solid rgba(255, 255, 255, 0.92);
   border-radius: 999px;
   background:
-    linear-gradient(135deg, rgba(255, 248, 226, 0.95), rgba(255, 209, 102, 0.9));
-  color: #6a3d88;
+    linear-gradient(135deg, rgba(255, 238, 248, 0.96), rgba(255, 177, 218, 0.9));
+  color: #7d3f76;
   font-size: 8px;
   box-shadow:
-    0 4px 0 rgba(194, 108, 199, 0.5),
-    0 9px 18px rgba(74, 46, 95, 0.24);
+    0 4px 0 rgba(210, 116, 178, 0.48),
+    0 9px 18px rgba(121, 52, 103, 0.22);
   text-transform: uppercase;
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
 
 .princess-page .back-to-hub:hover,
 .princess-page .back-to-hub:focus-visible {
-  transform: translateY(-2px);
+  transform: translate(-50%, -2px);
   box-shadow:
-    0 6px 0 rgba(194, 108, 199, 0.45),
-    0 12px 22px rgba(74, 46, 95, 0.28);
+    0 6px 0 rgba(210, 116, 178, 0.45),
+    0 12px 22px rgba(121, 52, 103, 0.26);
 }
 
 .princess-page .back-to-hub:active {
-  transform: translateY(2px);
+  transform: translate(-50%, 2px);
   box-shadow:
-    0 2px 0 rgba(194, 108, 199, 0.55),
-    0 6px 14px rgba(74, 46, 95, 0.22);
+    0 2px 0 rgba(210, 116, 178, 0.55),
+    0 6px 14px rgba(121, 52, 103, 0.2);
 }
 
 .princess-page .screen-content {
@@ -523,10 +525,6 @@ canvas {
   background: transparent;
   box-shadow: none;
   opacity: 0.9;
-}
-
-.princess-page #game-container.mobile-controls-active .back-to-hub {
-  bottom: 88px;
 }
 
 .final-scores {
