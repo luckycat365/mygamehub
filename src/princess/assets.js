@@ -37,7 +37,21 @@ export const assetUrl = (path) => new URL(`${ASSET_ROOT}/${path}`, import.meta.u
 
 const loadImage = (path) => new Promise((resolve, reject) => {
   const image = new Image();
-  image.onload = () => resolve(image);
+  image.decoding = 'async';
+  image.onload = () => {
+    const decode = typeof image.decode === 'function'
+      ? image.decode()
+      : Promise.resolve();
+
+    decode.then(() => resolve(image)).catch((error) => {
+      const hasUsableBitmap = image.complete && image.naturalWidth !== 0;
+      if (hasUsableBitmap) {
+        resolve(image);
+      } else {
+        reject(error);
+      }
+    });
+  };
   image.onerror = () => reject(new Error(`Failed to load image: ${path}`));
   image.src = assetUrl(path);
 });

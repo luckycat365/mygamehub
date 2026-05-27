@@ -271,6 +271,12 @@ canvas {
   transform: translateY(4px);
 }
 
+.retro-btn:disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
+}
+
 .sound-toggle-btn {
   position: absolute;
   top: 15px;

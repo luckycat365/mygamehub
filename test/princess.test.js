@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { assetUrl, PRINCESS_ASSET_PATHS } from '../src/princess/assets.js';
+import { assetUrl, loadPrincessAssets, PRINCESS_ASSET_PATHS } from '../src/princess/assets.js';
 import { LEVEL } from '../src/princess/level.js';
 import { TeacupSentry } from '../src/princess/enemy.js';
 import { PrincessPlayer } from '../src/princess/player.js';
@@ -144,6 +144,72 @@ test('Princess Star Adventure runtime asset paths stay in the PrincessStarAdvent
       fs.existsSync(path.join(assetRoot, assetPath)),
       `Missing Princess asset: ${assetPath}`
     );
+  }
+});
+
+test('Princess Star Adventure assets wait for image decode before becoming ready', async () => {
+  const originalImage = globalThis.Image;
+  let decodeResolvers = [];
+  let pendingDecodeCount = 0;
+
+  globalThis.Image = class {
+    constructor() {
+      this.complete = false;
+      this.naturalWidth = 0;
+      this.naturalHeight = 0;
+    }
+
+    set src(value) {
+      this._src = value;
+      this.complete = true;
+      this.naturalWidth = 448;
+      this.naturalHeight = 256;
+      setTimeout(() => this.onload?.(), 0);
+    }
+
+    get src() {
+      return this._src;
+    }
+
+    decode() {
+      pendingDecodeCount += 1;
+      return new Promise((resolve) => {
+        decodeResolvers.push(() => {
+          pendingDecodeCount -= 1;
+          resolve();
+        });
+      });
+    }
+  };
+
+  try {
+    let settled = false;
+    const assetsPromise = loadPrincessAssets().then((assets) => {
+      settled = true;
+      return assets;
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    assert.ok(decodeResolvers.length > 0);
+    assert.strictEqual(settled, false);
+
+    for (let attempts = 0; !settled && attempts < 20; attempts += 1) {
+      const resolvers = decodeResolvers;
+      decodeResolvers = [];
+      for (const resolveDecode of resolvers) resolveDecode();
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      await Promise.resolve();
+    }
+
+    const assets = await assetsPromise;
+    assert.strictEqual(pendingDecodeCount, 0);
+    assert.strictEqual(assets.princess.standing.length, 6);
+  } finally {
+    if (originalImage) {
+      globalThis.Image = originalImage;
+    } else {
+      delete globalThis.Image;
+    }
   }
 });
 

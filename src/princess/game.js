@@ -29,12 +29,14 @@ export class PrincessGame {
     this.bindButtons();
     this.resetLevel();
     this.updateHUD();
+    this.setStartButtonReady(false);
     this.showScreen('START');
     this.drawLoading();
 
     loadPrincessAssets().then((assets) => {
       this.assets = assets;
       this.state = 'START';
+      this.setStartButtonReady(true);
       this.draw();
     }).catch((error) => {
       this.state = 'ERROR';
@@ -64,6 +66,12 @@ export class PrincessGame {
     this.dom.resumeBtn?.addEventListener('click', () => this.resume());
     this.dom.restartBtn?.addEventListener('click', () => this.restart());
     this.dom.playAgainBtn?.addEventListener('click', () => this.restart());
+  }
+
+  setStartButtonReady(isReady) {
+    if (!this.dom.startBtn) return;
+    this.dom.startBtn.disabled = !isReady;
+    this.dom.startBtn.textContent = isReady ? 'START QUEST' : 'LOADING...';
   }
 
   resetLevel() {
