@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { PrincessSound } from '../src/princess/sound.js';
+
+const repoRoot = path.dirname(fileURLToPath(new URL('../package.json', import.meta.url)));
 
 globalThis.Audio = class {
   constructor(src) {
@@ -94,5 +99,28 @@ test('PrincessSound background music controls', async (t) => {
     assert.ok(sound.doubleJump);
     assert.strictEqual(sound.doubleJump.paused, false);
     assert.strictEqual(sound.doubleJump.volume, sound.sfxVolume);
+  });
+
+  await t.test('double jump effect starts without a perceptible silence gap', () => {
+    const soundPath = path.join(
+      repoRoot,
+      'assets',
+      'sounds',
+      'PrincessStarAdventure',
+      'princess double jump.wav'
+    );
+    const wav = fs.readFileSync(soundPath);
+    const sampleRate = wav.readUInt32LE(24);
+    const dataOffset = wav.indexOf(Buffer.from('data')) + 8;
+    const firstAudibleByte = (() => {
+      for (let offset = dataOffset; offset < wav.length; offset += 2) {
+        if (Math.abs(wav.readInt16LE(offset)) > 80) return offset;
+      }
+      return -1;
+    })();
+
+    assert.notStrictEqual(firstAudibleByte, -1);
+    const firstAudibleSeconds = ((firstAudibleByte - dataOffset) / 2) / sampleRate;
+    assert.ok(firstAudibleSeconds < 0.05);
   });
 });
