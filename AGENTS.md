@@ -6,7 +6,7 @@ This repository is a static browser game hub rooted at `K:\PythonCodes\Antigravi
 
 - Landing page: `index.html`
 - Shared styles: `index.css`
-- Landing page music bootstrap: `src/landing.js`
+- Landing page behavior bootstrap: `src/landing.js`
 - Game page: `games/corgi-run/index.html`
 - Game bootstrap: `src/main.js`
 - Main gameplay coordinator: `src/game.js`
@@ -23,7 +23,6 @@ Serve the repo as a static site from the repository root. A working local URL in
   - `assets/images/Landing page background.png`
   - `assets/images/corgi-run-card.png`
   - `assets/images/princess-magic-card.png`
-  - `assets/music/AI for Beauty.mp3`
 - The in-game music uses:
   - `assets/music/AP.mp3`
 
@@ -107,8 +106,7 @@ How to use these assets in future development:
 ## Audio Notes
 
 - Browsers may block first-load autoplay for audible media.
-- Landing-page music should retry on user interaction and page visibility changes.
-- Do not route landing-page music through the game sound system unless there is a clear reason.
+- Do not route landing-page behavior through the game sound system unless there is a clear reason.
 
 ## Testing
 
@@ -127,7 +125,6 @@ Current tests cover:
 Manual browser checks are still required for:
 
 - landing-page layout
-- landing-page music behavior
 - responsive card sizing
 - game startup and in-browser audio
 
